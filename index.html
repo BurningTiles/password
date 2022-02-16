@@ -1,0 +1,36 @@
+<html>
+	<head>
+		<title>Password Generator</title>
+		<script>
+			var special = [33, 35, 36, 38, 42, 45, 63, 64];
+			function rand() {
+				return Math.floor((Math.random()*10000));
+			}
+			function generateNewPassword() {
+				var pass = [];
+				pass.push((rand()%26)+65);
+				for(let i=0; i<2; i++) pass.push((rand()%26)+97);
+				pass.push(special[rand()%7]);
+				for(let i=0; i<2; i++) pass.push((rand()%10)+48);
+				pass.push(special[rand()%7]);
+				pass.push((rand()%10)+48);
+				for(let i=0; i<2; i++) pass.push((rand()%26)+97);
+				return String.fromCharCode(...pass);
+			}
+			function setNewPassword() {
+				document.getElementById("password").innerHTML = generateNewPassword();
+			}
+			function copyPassword() {
+				navigator.clipboard.writeText(document.getElementById("password").innerHTML);
+			}
+			window.onload = function() {
+				setNewPassword();
+			}
+		</script>
+	</head>
+	<body>
+		<h1>Password: <span id="password"></span></h1>
+		<button onclick="setNewPassword()">Refresh</button>
+		<button onclick="copyPassword()">Copy</button>
+	</body>
+</html>
